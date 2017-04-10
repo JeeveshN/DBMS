@@ -1,5 +1,6 @@
 from flask import Flask,render_template,redirect,url_for,request,flash,session
 from db_queries import Database
+import re
 
 app = Flask(__name__)
 app.secret_key = 'DBMS'
@@ -88,7 +89,9 @@ def add_show_sub():
 	hid = request.form['hall']
 	mid = request.form['movie']
 	time = request.form['time']
-	db.addshow(hid,mid,time)
+	time = re.sub('T'," ",time)
+	time = time+":00"
+	db.add_show(int(hid),int(mid),time)
 	return redirect('admin')
 
 # @app.route('/remshow/submit',methods=['POST'])

@@ -80,7 +80,7 @@ class Database():
 				"genre": g
 			}
 			json.append(x)
-		return str(json)
+		return json
 
 	# Done
 	def get_movie_search(self, name):
