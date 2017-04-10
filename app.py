@@ -56,7 +56,10 @@ def user():
 
 @app.route('/addshow')
 def add_show():
-	return render_template('admin/addshow.html')
+	halls=db.get_halls()
+	movies = db.get_movies()
+	days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+	return render_template('admin/addshow.html',halls=halls,movies=movies,days=days)
 
 @app.route('/remshow')
 def rem_show():
@@ -80,8 +83,13 @@ def rem_movie():
 	movies = db.get_movies()
 	return render_template('admin/remmovie.html', movies=movies)
 
-# @app.route('/addshow/submit',methods=['POST'])
-# def add_show_sub():
+@app.route('/addshow/submit',methods=['POST'])
+def add_show_sub():
+	hid = request.form['hall']
+	mid = request.form['movie']
+	time = request.form['time']
+	db.addshow(hid,mid,time)
+	return redirect('admin')
 
 # @app.route('/remshow/submit',methods=['POST'])
 # def rem_show_sub():
