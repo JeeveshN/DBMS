@@ -10,16 +10,19 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
   <link href="static/css/style.min.css" type="text/css" rel="stylesheet">
   <link href="static/css/page-center.css" type="text/css" rel="stylesheet">
-  
+
 </head>
 
 <body class="cyan">
   <div class="row">
     <div class="col s12">
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('show_halls')}}">Show All</a>
+      </div>
       <div class ="row">
         <a class="btn waves-effect waves-light col s12" href="{{url_for('add_hall')}}">Add Hall</a>
       </div>
@@ -68,11 +71,11 @@
       </form> -->
     </div>
   </div>
- 
+
   <!-- jQuery Library -->
   <script type="text/javascript" src="static/js/jquery-1.11.2.min.js"></script>
   <!--materialize js-->
   <script type="text/javascript" src="static/js/materialize.min.js"></script>
-  
+
 </body>
 </html>

@@ -5,8 +5,8 @@ import re
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
-app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
@@ -59,8 +59,7 @@ def user():
 def add_show():
 	halls=db.get_halls()
 	movies = db.get_movies()
-	days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-	return render_template('admin/addshow.html',halls=halls,movies=movies,days=days)
+	return render_template('admin/addshow.html',halls=halls,movies=movies)
 
 @app.route('/remshow')
 def rem_show():
@@ -94,6 +93,20 @@ def add_show_sub():
 	db.add_show(int(hid),int(mid),time)
 	return redirect('admin')
 
+@app.route('/show_halls')
+def show_halls():
+	halls = db.get_halls()
+	return render_template('admin/halls.html',halls=halls)
+
+@app.route('/show_hall_movies',methods=['POST'])
+def show_hall_movies():
+	hid = int(request.form['hall'])
+	shows = db.get_shows_of_hall(hid)
+	print shows
+	return render_template('/admin/all_shows.html',shows=shows)
+
+
+
 # @app.route('/remshow/submit',methods=['POST'])
 # def rem_show_sub():
 
@@ -117,7 +130,7 @@ def add_movieSub():
 	title = request.form['mname']
 	rating = request.form['mrating']
 	desc = request.form['desc']
-	img = request.form['image']
+	img = request.form['img']
 	lang = request.form['lang']
 	genre = request.form['genre']
 	db.add_movie(title, desc, rating, lang, img, genre)

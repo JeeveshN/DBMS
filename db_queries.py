@@ -29,7 +29,7 @@ class Database():
 			x = {
 				"hid": hid,
 				"h_name": h_name,
-				"n_seats": n_seats 
+				"n_seats": n_seats
 			}
 			json.append(x)
 		return json
@@ -107,6 +107,8 @@ class Database():
 
 	# Done
 	def add_movie(self, title, descr, rating, lang, img, genre):
+		descr = str(descr)
+		img = str(img)
 		query = "INSERT INTO movie(title, rating, descr, img, lang) VALUES('%s', '%s', '%s', '%s', '%s')" % (title, rating, descr, img, lang)
 		print(query)
 		self.cursor.execute(query)
@@ -189,6 +191,23 @@ class Database():
 				"mid": mid,
 				"hid": hid,
 				"h_name": h_name,
+				"time": time,
+				"avail": avail
+			}
+			json.append(x)
+		return json
+
+	def get_shows_of_hall(self,hid):
+		self.cursor.execute("SELECT * FROM hall NATURAL JOIN shows NATURAL JOIN movie WHERE hid=%d" %hid)
+		res = self.cursor.fetchall()
+		json = []
+		print res
+		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
+			x = {
+				"title": title,
+				"img":img,
+				"descr":descr,
+				"lang":lang,
 				"time": time,
 				"avail": avail
 			}
