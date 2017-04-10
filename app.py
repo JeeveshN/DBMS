@@ -4,7 +4,7 @@ from db_queries import Database
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'N@1901root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
 app.config['MYSQL_DATABASE_DB'] = 'project'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
@@ -64,11 +64,17 @@ def rem_show():
 
 @app.route('/addhall')
 def add_hall():
+	db.add_hall('Audi 5', 10, 15, 25)
 	return ('Add Hall')
 
 @app.route('/remhall')
 def rem_hall():
+	db.delete_hall(8)
 	return ('Remove Show')
+
+@app.route('/test')
+def test():
+	return db.get_halls()
 
 @app.route('/addmovie')
 def add_movie():

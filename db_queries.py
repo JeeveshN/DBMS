@@ -30,19 +30,19 @@ class Database():
 				"n_seats": n_seats 
 			}
 			json.append(x)
-		return str(json)
+		return json
 
 	def add_hall(self, h_name, platinum, gold, silver):
 		i = 1
 		self.cursor.execute("INSERT INTO hall(h_name) VALUES('%s')" % h_name)
-		(hid, h_name, n_seats) = self.cursor.fetchone()
-		for _ in range(platinum):
+		hid = self.cursor.lastrowid
+		for _ in range(platinum*10):
 			self.cursor.execute("INSERT INTO has_seats(hid,sid,type) VALUES(%d, %d, 'Platinum')" % (hid, i))
 			i += 1
-		for _ in range(gold):
+		for _ in range(gold*10):
 			self.cursor.execute("INSERT INTO has_seats(hid,sid,type) VALUES(%d, %d, 'Gold')" % (hid, i))
 			i += 1
-		for _ in range(silver):
+		for _ in range(silver*10):
 			self.cursor.execute("INSERT INTO has_seats(hid,sid,type) VALUES(%d, %d, 'Silver')" % (hid, i))
 			i += 1
 		self.conn.commit()
@@ -55,7 +55,6 @@ class Database():
 	def get_movies(self):
 		self.cursor.execute("select * from movie")
 		res = self.cursor.fetchall()
-		print(type(res))
 		json = []
 		for (mid, title, rating, descr, img, lang) in res:
 			x = {
@@ -77,4 +76,23 @@ class Database():
 	def delete_movie(self, mid):
 		mid = str(mid)
 		self.cursor.execute("DELETE FROM movie WHERE mid=%s" % (mid))
+
+	def get_shows(self):
+		self.cursor.execute("select * from shows")
+		res = self.cursor.fetchall()
+		json = []
+		for (hid,mid,time,avail) in res:
+			x = {
+				"mid": mid,
+				"hid": hid,
+				"time": time,
+				"avail": avail,
+			}
+			json.append(x)
+		return str(json)
+
+	# def book_show(self,hid,sid_list):
+	# 	for sid in sid_list:
+	# 		query = "INSERT INTO seats_booked"
+
 
