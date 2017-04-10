@@ -10,6 +10,9 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
+  <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
 </head>
 
 <body class="cyan">
@@ -23,29 +26,27 @@
     </div>
       {%for movie in movies%}
       <div class="row">
-          <div class="card">
+          <div class="card small">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" src="http://lookwhatscookin.com/shop/images/product/6/6-qt-pasta-pot-400px-512px.jpg">
           </div>
           <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
+            <span class="card-title activator grey-text text-darken-4">{{movie['title']}}<i class="right">^</i></span>
           </div>
           <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            <span class="card-title grey-text text-darken-4">{{movie['title']}}<i class="right">X</i></span>
+            <p>{{movie['descr']}}</p>
           </div>
         </div>
       </div>
       {% endfor %}
-  <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
-  <link href="static/css/style.min.css" type="text/css" rel="stylesheet">
-  <link href="static/css/page-center.css" type="text/css" rel="stylesheet">
+
+ 
 
   <!-- jQuery Library -->
-  <script type="text/javascript" src="static/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
-  <script type="text/javascript" src="static/js/materialize.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
   
 </body>
 </html>

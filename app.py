@@ -120,13 +120,15 @@ def add_hall_sub():
 	return redirect('admin')
 
 @app.route('/remhall/submit',methods=['POST'])
-def rem_hallSub():
+def rem_hall_sub():
 	bid = request.form['del']
-	db.delete_halls(bid)
+	print(bid)
+	if bid:
+		db.delete_hall(bid)
 	return redirect('admin')
 
 @app.route('/addmovie/submit',methods=['POST'])
-def add_movieSub():
+def add_movie_sub():
 	title = request.form['mname']
 	rating = request.form['mrating']
 	desc = request.form['desc']
@@ -137,7 +139,7 @@ def add_movieSub():
 	return redirect('admin')
 
 # @app.route('/remmovie/submit',methods=['POST'])
-# def rem_movieSub():
+# def rem_movie_sub():
 
 @app.route('/viewmovie')
 def view_movie():

@@ -11,9 +11,9 @@
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
   
-  <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
-  <link href="static/css/style.min.css" type="text/css" rel="stylesheet">
-  <link href="static/css/page-center.css" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
 
 </head>
 
@@ -31,29 +31,9 @@
             <button class="center waves-effect waves-light col s12">{{hall['h_name']}}</button>
           </div>          
         {% endfor %}
-
-<!--    <div class="row margin">
-          <div class="input-field col s12">
-            <input name="email" id="email" type="text">
-            <label for="email" class="center-align">Email</label>
-          </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input name="password" id="password" type="password">
-            <label for="password">Password</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <button type="submit" class="btn waves-effect waves-light col s12">Login</button>
-          </div>
-        </div>
- -->        <div class="row">
         </div>
       <form class="login-form" action="/remhall/submit" method="POST">
-          <input type="text" id="del" name="del" hidden required>
+          <input type="text" id="del" name="del" hidden>
           <div class="row">
             <div class="input-field col s12">
               <button type="submit" class="btn waves-effect waves-light col s12">Remove</button>
@@ -64,9 +44,10 @@
   <!-- </div> -->
 
   <!-- jQuery Library -->
-  <script type="text/javascript" src="static/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
-  <script type="text/javascript" src="static/js/materialize.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+
   <script type="text/javascript">
     $(document).ready(function() {
       $('.remb').click(function(){
