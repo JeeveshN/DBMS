@@ -4,7 +4,7 @@ from db_queries import Database
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'N@1901root'
 app.config['MYSQL_DATABASE_DB'] = 'project'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
@@ -109,7 +109,7 @@ def add_movieSub():
 	img = request.form['image']
 	lang = request.form['lang']
 	genre = request.form['genre']
-	db.add_movie(title, desc, rating, lang, img, genre)
+	db.add_movies(title, desc, rating, lang, img)
 	return redirect('admin')
 
 # @app.route('/remmovie/submit',methods=['POST'])

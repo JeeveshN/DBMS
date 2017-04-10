@@ -37,6 +37,9 @@ class Database():
 	# Done
 	def add_hall(self, h_name, platinum, gold, silver):
 		i = 1
+		platinum = int(platinum)
+		gold = int(gold)
+		silver = int(silver)
 		self.cursor.execute("INSERT INTO hall(h_name) VALUES('%s')" % h_name)
 		hid = self.cursor.lastrowid
 		for _ in range(platinum*10):
