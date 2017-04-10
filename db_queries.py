@@ -161,6 +161,99 @@ class Database():
 		self.conn.commit()
 		return 'Success'
 
+	# Done
+	def delete_show(self, hid, mid, time):
+		if not isinstance(time, str):
+			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		print(time)
+		self.cursor.execute("DELETE FROM shows WHERE hid=%d AND mid=%d AND time='%s'"%(hid, mid, time))
+		self.conn.commit()
+		return 'Success'
+
+	def register_user(fname, lname, email, phno, pwd):
+		type = "User"
+		self.cursor.execute("INSERT INTO user(fname, lname, email, phno, pwd, type) VALUES('%s', '%s', '%s', '%s', '%s', '%s')"%(fname, lname, email, phno, pwd, type))
+
+
+	def get_shows_of_movie(self, mid):
+		mid = int(mid)
+		d = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+		self.cursor.execute("SELECT * FROM hall NATURAL JOIN shows NATURAL JOIN movie WHERE mid=%d AND time>'%s'"%(mid, d))
+		res = self.cursor.fetchall()
+		json = []
+		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
+			x = {
+				"mid": mid,
+				"hid": hid,
+				"h_name": h_name,
+				"time": time,
+				"avail": avail
+			}
+			json.append(x)
+		return json
+
+	def get_seats(self, mid, hid, time):
+		mid = int(mid)
+		hid = int(hid)
+		uid = int(uid)
+		if not isinstance(time, str):
+			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		self.cursor.execute("SELECT bid FROM booking WHERE hid=%d AND mid=%d AND time=%s"%(hid, mid, time))
+		bids = []
+		for b in self.cursor.fetchall():
+			x = b[0]
+			bids.append(x)
+		f_str = ','.join(['%s']*len(bids))
+		self.cursor.execute("SELECT sid FROM seats_booked WHERE hid=%d AND bid in (%s)" % (hid, f_str, tuple(bids)))
+		booked_sids = []
+		for b in self.cursor.fetchall():
+			x = b[0]
+			booked_sids.append(x)
+		self.cursor.execute("SELECT sid, type FROM has_seats WHERE hid=%d"%hid)
+		sid_status = {}
+		sid_type = {}
+		for (b,t) in self.cursor.fetchall():
+			if b in booked_sids:
+				sid_status[b] = 'booked'
+			else:
+				sid_status[b] = 'avail'
+			sid_type[b] = t
+
+		self.cursor.execute("SELECT title FROM movie WHERE mid=%d" % mid)
+		title = self.cursor.fetchall()[0][0]
+		json = {
+			'title': title,
+			'mid': mid,
+			'hid': hid,
+			'time': time,
+			'seats': sid_status,
+			'seat_type': sid_type
+		}
+		return json
+
+	def book(self, mid, hid, time, uid, seat_list):
+		mid = int(mid)
+		hid = int(hid)
+		uid = int(uid)
+		if not isinstance(time, str):
+			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		n_seats = 0
+		for _ in seat_list:
+			n_seats += 1
+		self.cursor.execute("INSERT INTO booking(bid, mid, hid, time, uid, n_seats) VALUES(%d, %d, %d, '%s', %d, %d)" % (bid, mid, hid, time, uid, n_seats))
+		for sid in seat_list:
+			self.cursor.execute("INSERT INTO seats_booked(bid, sid, hid) VALUES(%d,%d,%d)"%(bid, sid, hid))
+		self.conn.commit()
+		return 'Success'
 
 
 
+
+"""
+Receive movie from user
+Return hall and time of shows (Page 1)
+Receive a hall and time
+Return list of available seats (Page 2)
+Get set of seats, hid, mid, time, eid
+Make booking EZPZ
+"""

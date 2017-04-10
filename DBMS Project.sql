@@ -3,7 +3,7 @@ use project;
 
 CREATE TABLE hall (
 	hid INTEGER AUTO_INCREMENT PRIMARY KEY,
-    h_name VARCHAR(10) NOT NULL,
+    h_name VARCHAR(10) NOT NULL UNIQUE,
     n_seats INTEGER DEFAULT 0
 );
 
@@ -27,7 +27,8 @@ CREATE TABLE movie (
     rating VARCHAR(4) NOT NULL,
     descr VARCHAR(5000) NOT NULL,
     img VARCHAR(3000) NOT NULL,
-    lang VARCHAR(15) NOT NULL
+    lang VARCHAR(15) NOT NULL,
+    UNIQUE(title, lang)
 );
 
 CREATE TABLE movie_genre (
@@ -91,7 +92,7 @@ CREATE TRIGGER new_show BEFORE INSERT ON shows
 FOR EACH ROW
 BEGIN
 	DECLARE c INTEGER;
-    SELECT COUNT(*) INTO c FROM has_seats WHERE has_seats.hid = NEW.hid;SELECT COUNT(*) INTO c FROM has_seats WHERE has_seats.hid = NEW.hid;
+    SELECT COUNT(*) INTO c FROM has_seats WHERE has_seats.hid = NEW.hid;
 	SET NEW.avail = c;
 END; //
 DELIMITER ;
