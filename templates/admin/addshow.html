@@ -26,25 +26,37 @@
             <p class="center login-form-text">Add Show</p>
           </div>
         </div>
-<!--         <div class="row margin">
+        <div class="row margin">
           <div class="input-field col s12">
-            <input name="email" id="email" type="text">
-            <label for="email" class="center-align">Email</label>
+            <select name="hall" class="browser-default">
+              <option value="" disabled>Hall</option>
+              {% for hall in halls %}
+              <option value="{{ hall['hid'] }}">{{ hall['h_name'] }}</option>
+              {% endfor %}
+            </select>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input name="password" id="password" type="password">
-            <label for="password">Password</label>
+            <select name="movie" class="browser-default">
+              <option value="" disabled>Movie</option>
+              {% for movie in movies %}
+              <option value="{{ movie['mid'] }}">{{ movie['title'] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input id="time" name="time" type="datetime"> Timings </input>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button type="submit" class="btn waves-effect waves-light col s12">Login</button>
+            <button type="submit" class="btn waves-effect waves-light col s12">Add Show</button>
           </div>
         </div>
- -->        <div class="row">
+         <div class="row">
         </div>
 
       </form>
