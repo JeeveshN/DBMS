@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--================================================================================
-  Item Name: Materialize - Material Design Admin Template
-  Version: 3.1
-  Author: GeeksLabs
-  Author URL: http://www.themeforest.net/user/geekslabs
-================================================================================ -->
-
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
   
@@ -18,30 +11,32 @@
 </head>
 
 <body class="cyan">
-  <!-- <div id="login-page" class="row"> -->
-    <div class="col s12 z-depth-4 card-panel">
-        <div class="row">
-        <div class="col s12 m7">
-          <div class="card large">
-            <div class="card-image">
-              <img src="images/sample-1.jpg">
-              <span class="card-title">Card Title</span>
-            </div>
-            <div class="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
-            </div>
-          </div>
+  
+  <div class="col s12 card-panel">
+    <form class="login-form" action="/getseats" method="POST">
+      <div class="row">
+        <div class="input-field col s12 center">
+          <p class="center login-form-text">Book Ticket for "{{movie['title']}}"</p>
+        </div>
+      </div>
+      <div class="row margin">
+        <div class="input-field col s12">
+          <select name="hall" class="browser-default">
+            <option value="" disabled>Choose Hall</option>
+            {% for show in shows %}
+            <option value="{{movie['mid']}},{{show['hid']}},{{show['time']}}">{{ show['h_name']}} {{ show['time'].strftime('%d-%m-%Y %H:%M') }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="row margin">
+        <div class="input-field col s12">
+          <button type="submit" class="btn waves-effect waves-light col s12">Choose Seats</button>
         </div>
       </div>
       <div class="row">
-          <div class="input-field col s12">
-            <button type="button" class="btn waves-effect waves-light col s12">Book</button>
-          </div>
-        </div>
-        <div class="row">
-        </div>
-    </div>
+      </div>
+    </form>
   </div>
 
   <!-- jQuery Library -->

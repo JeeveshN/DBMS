@@ -18,39 +18,33 @@
 </head>
 
 <body class="cyan">
-  <!-- <div id="login-page" class="row"> -->
+  <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
       <div class="row">
-        <div class="input-field col s12 center">
-          <p class="center login-form-text">{{movie['mname']}}</p>
+        <div class="input-field col s12">
+          <p class="center login-form-text">{{movie[0]['title']}}</p>
         </div>
       </div>
     </div>
-
     <div class="row">
-        <div class="col s12 m7">
-          <div class="card large">
+        <div class="col s12">
+          <div class="card">
             <div class="card-image">
-              <img src="images/sample-1.jpg">
-              <span class="card-title">Card Title</span>
+              <img src="https://thumb7.shutterstock.com/display_pic_with_logo/64260/288277301/stock-photo-balanced-diet-cooking-culinary-and-food-concept-close-up-of-vegetables-fruits-and-meat-on-288277301.jpg">
+              <span class="card-title">{{movie[0]['title']}}</span>
             </div>
             <div class="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
-            </div>
-            <div class="card-action">
-              <a href="#">This is a link</a>
+              <p>{{movie[0]['descr']}}</p>
             </div>
           </div>
         </div>
       </div>
-
         <div class="row">
           <div class="input-field col s12">
-            <button type="button" class="btn waves-effect waves-light col s12">Book</button>
+            <a class="btn waves-effect waves-light col s12" href="{{ url_for('book_movie', mid=movie[0]['mid']) }}">Book</a>
           </div>
         </div>
-
+    </div>
   <!-- jQuery Library -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->

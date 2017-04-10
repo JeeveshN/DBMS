@@ -23,7 +23,6 @@ class Database():
 	def get_halls(self):
 		self.cursor.execute("select * from hall")
 		res = self.cursor.fetchall()
-		print(type(res))
 		json = []
 		for hid, h_name, n_seats in res:
 			x = {
@@ -198,7 +197,6 @@ class Database():
 	def get_seats(self, mid, hid, time):
 		mid = int(mid)
 		hid = int(hid)
-		uid = int(uid)
 		if not isinstance(time, str):
 			time = time.strftime("%Y-%m-%d %H:%M:%S")
 		self.cursor.execute("SELECT bid FROM booking WHERE hid=%d AND mid=%d AND time=%s"%(hid, mid, time))
@@ -249,7 +247,28 @@ class Database():
 		self.conn.commit()
 		return 'Success'
 
-
+	def get_movie(self, mid):
+		mid= int(mid)
+		self.cursor.execute("select * from movie where mid = %d" % mid)
+		res = self.cursor.fetchall()
+		json = []
+		for (mid, title, rating, descr, img, lang) in res:
+			self.cursor.execute("SELECT genre FROM movie_genre WHERE mid = %d"%mid)
+			genres = self.cursor.fetchall()
+			g = []
+			for x in list(genres):
+				g.append(x[0])
+			x = {
+				"mid": mid,
+				"title": title,
+				"rating": rating,
+				"descr": descr,
+				"img": img,
+				"lang": lang,
+				"genre": g
+			}
+			json.append(x)
+		return json
 
 
 """

@@ -11,157 +11,164 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
 def authorize(u,p):
-	return None
+    return None
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-	# if 'user' in session:
-	# 	if session['user'] == 'User':
-	# 		return redirect('user')
-	# 	else:
-	# 		return redirect('admin')
-	return render_template('index.html')
+    # if 'user' in session:
+    #   if session['user'] == 'User':
+    #       return redirect('user')
+    #   else:
+    #       return redirect('admin')
+    return render_template('index.html')
 
 @app.route('/login/submit', methods=['POST'])
 def loginSub():
-	userid = request.form['email']
-	password = request.form['password']
-	auth = db.auth_user(userid,password)
-	print(auth)
-	if auth is not None:
-		session['user']=auth
-		if auth=='User':
-			return('User')
-		else:
-			return redirect('admin')
-	else:
-		return redirect('')
+    userid = request.form['email']
+    password = request.form['password']
+    auth = db.auth_user(userid,password)
+    print(auth)
+    if auth is not None:
+        session['user']=auth
+        if auth=='User':
+            return('User')
+        else:
+            return redirect('admin')
+    else:
+        return redirect('')
 
 @app.route('/admin')
 def admin():
-	# if not 'user' in session:
-	# 	return redirect('')
-	# elif session['user'] is not 'Admin':
-	# 	return redirect('')
-	return render_template('admin.html')
+    # if not 'user' in session:
+    #   return redirect('')
+    # elif session['user'] is not 'Admin':
+    #   return redirect('')
+    return render_template('admin.html')
 
 @app.route('/user')
 def user():
-	# if not 'user' in session:
-	# 	return redirect('')
-	# elif session['user'] is not 'User':
-	# 	return redirect('')
-	return render_template('user.html')
+    # if not 'user' in session:
+    #   return redirect('')
+    # elif session['user'] is not 'User':
+    #   return redirect('')
+    return render_template('user.html')
 
 @app.route('/addshow')
 def add_show():
-	halls=db.get_halls()
-	movies = db.get_movies()
-	days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-	return render_template('admin/addshow.html',halls=halls,movies=movies,days=days)
+    halls=db.get_halls()
+    movies = db.get_movies()
+    days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    return render_template('admin/addshow.html',halls=halls,movies=movies,days=days)
 
 @app.route('/remshow')
 def rem_show():
-	return render_template('admin/remshow.html')
+    return render_template('admin/remshow.html')
 
 @app.route('/addhall')
 def add_hall():
-	return render_template('admin/addhall.html')
+    return render_template('admin/addhall.html')
 
 @app.route('/remhall')
 def rem_hall():
-	halls = db.get_halls()
-	return render_template('admin/remhall.html', halls=halls)
+    halls = db.get_halls()
+    return render_template('admin/remhall.html', halls=halls)
 
 @app.route('/addmovie')
 def add_movie():
-	return render_template('admin/addmovie.html')
+    return render_template('admin/addmovie.html')
 
 @app.route('/remmovie')
 def rem_movie():
-	movies = db.get_movies()
-	return render_template('admin/remmovie.html', movies=movies)
+    movies = db.get_movies()
+    return render_template('admin/remmovie.html', movies=movies)
 
 @app.route('/addshow/submit',methods=['POST'])
 def add_show_sub():
-	hid = request.form['hall']
-	mid = request.form['movie']
-	time = request.form['time']
-	time = re.sub('T'," ",time)
-	time = time+":00"
-	db.add_show(int(hid),int(mid),time)
-	return redirect('admin')
+    hid = request.form['hall']
+    mid = request.form['movie']
+    time = request.form['time']
+    time = re.sub('T'," ",time)
+    time = time+":00"
+    db.add_show(int(hid),int(mid),time)
+    return redirect('admin')
 
 # @app.route('/remshow/submit',methods=['POST'])
 # def rem_show_sub():
 
 @app.route('/addhall/submit',methods=['POST'])
 def add_hall_sub():
-	hname = request.form['hname']
-	n_p = request.form['num_platinum']
-	n_g = request.form['num_gold']
-	n_s = request.form['num_silver']
-	db.add_hall(hname,n_p,n_g,n_s)
-	return redirect('admin')
+    hname = request.form['hname']
+    n_p = request.form['num_platinum']
+    n_g = request.form['num_gold']
+    n_s = request.form['num_silver']
+    db.add_hall(hname,n_p,n_g,n_s)
+    return redirect('admin')
 
 @app.route('/remhall/submit',methods=['POST'])
 def rem_hall_sub():
-	bid = request.form['del']
-	print(bid)
-	if bid:
-		db.delete_hall(bid)
-	return redirect('admin')
+    bid = request.form['del']
+    print(bid)
+    if bid:
+        db.delete_hall(bid)
+    return redirect('admin')
 
 @app.route('/addmovie/submit',methods=['POST'])
 def add_movie_sub():
-	title = request.form['mname']
-	rating = request.form['mrating']
-	desc = request.form['desc']
-	img = request.form['image']
-	lang = request.form['lang']
-	genre = request.form['genre']
-	db.add_movie(title, desc, rating, lang, img, genre)
-	return redirect('admin')
+    title = request.form['mname']
+    rating = request.form['mrating']
+    desc = request.form['desc']
+    img = request.form['image']
+    lang = request.form['lang']
+    genre = request.form['genre']
+    db.add_movie(title, desc, rating, lang, img, genre)
+    return redirect('admin')
 
 # @app.route('/remmovie/submit',methods=['POST'])
 # def rem_movie_sub():
 
 @app.route('/viewmovie')
 def view_movie():
-	return render_template('user/viewmovie.html',movie=movie)
+    return render_template('user/viewmovie.html',movie=movie)
 
-# @app.route('/bookmovie')
-# def book_movie():
-# 	return render_template('user/bookmovie.html')
+@app.route('/bookmovie/<mid>')
+def book_movie(mid):
+    movie = db.get_movie(mid)[0]
+    shows = db.get_shows_of_movie(mid)
+    return render_template('user/bookmovie.html',movie=movie,shows=shows)
 
 @app.route('/searchmovie')
 def search_movie():
-	return render_template('user/searchmovie.html')
+    return render_template('user/searchmovie.html')
 
 @app.route('/allmovies')
 def all_movie():
-	movies = db.get_movies()
-	return render_template('user/allmovie.html',movies=movies)
+    movies = db.get_movies()
+    return render_template('user/allmovie.html',movies=movies)
 
 @app.route('/bookmovie/submit',methods=['POST'])
 def book_movie_sub():
-	return render_template('user/bookmovie.html')
+    return render_template('user/bookmovie.html')
 
 @app.route('/searchmovie/submit',methods=['POST'])
 def search_movie_sub():
-	movie = request.form['mname']
-	print(movie)
-	res = db.get_movie_search(movie)
-	if res:
-		return render_template('user/viewmovie.html',movie=res)
-	return render_template('user/searchmovie.html')
-# @app.route('/logout')
-# def logout():
-# 	session.pop('user',None)
-# 	return redirect(url_for('logged_in'))
+    movie = request.form['mname']
+    print(movie)
+    res = db.get_movie_search(movie)
+    if res:
+        return render_template('user/viewmovie.html',movie=res)
+    return render_template('user/searchmovie.html')
 
+@app.route('/getseats',methods=['POST'])
+def getseats():
+    res = request.form['hall']
+    print(res)
+    res = res.split(',')
+    mid = res[0]
+    hall = res[1]
+    time = res[2]
+    db.get_seats(mid,hall,time)
 
 if __name__ == '__main__':
-	app.run(debug=True)
+    app.run(debug=True)

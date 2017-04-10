@@ -28,7 +28,7 @@
       <div class="row">
           <div class="card small">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="http://lookwhatscookin.com/shop/images/product/6/6-qt-pasta-pot-400px-512px.jpg">
+            <img class="activator" src="https://thumb7.shutterstock.com/display_pic_with_logo/64260/288277301/stock-photo-balanced-diet-cooking-culinary-and-food-concept-close-up-of-vegetables-fruits-and-meat-on-288277301.jpg">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie['title']}}<i class="right">^</i></span>
@@ -36,6 +36,7 @@
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie['title']}}<i class="right">X</i></span>
             <p>{{movie['descr']}}</p>
+            <a class="btn waves-effect waves-light col s12" href="{{ url_for('book_movie', mid=movie['mid']) }}">Book</a>
           </div>
         </div>
       </div>
