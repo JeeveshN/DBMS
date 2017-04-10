@@ -56,14 +56,21 @@ def user():
 
 @app.route('/addshow')
 def add_show():
-	return ('Add Show')
+	return render_template('admin/addshow.html')
 
 @app.route('/remshow')
 def rem_show():
-	return ('Remove Show')
+	return render_template('admin/remshow.html')
 
 @app.route('/addhall')
 def add_hall():
+<<<<<<< HEAD
+	return render_template('admin/addhall.html')
+
+@app.route('/remhall')
+def rem_hall():
+	return render_template('admin/remhall.html')
+=======
 	db.add_hall('Audi 5', 10, 15, 25)
 	return ('Add Hall')
 
@@ -71,6 +78,7 @@ def add_hall():
 def rem_hall():
 	db.delete_hall(8)
 	return ('Remove Show')
+>>>>>>> cb9197858084b0e7ffffb2315c7e2b73a558755a
 
 @app.route('/test')
 def test():
@@ -78,11 +86,44 @@ def test():
 
 @app.route('/addmovie')
 def add_movie():
-	return ('Add Movie')
+	return render_template('admin/addmovie.html')
 
 @app.route('/remmovie')
 def rem_movie():
-	return ('Remove Movie')
+	return render_template('admin/remmovie.html')
+
+# @app.route('/addshow/submit',methods=['POST'])
+# def add_show_sub():
+
+# @app.route('/remshow/submit',methods=['POST'])
+# def rem_show_sub():
+
+@app.route('/addhall/submit',methods=['POST'])
+def add_hall_sub():
+	hname = request.form['hname']
+	n_p = request.form['num_platinum']
+	n_g = request.form['num_gold']
+	n_s = request.form['num_silver']
+	db.add_hall(hname,n_p,n_g,n_s)
+	return redirect('admin')
+
+# @app.route('/remhall/submit',methods=['POST'])
+# def rem_hallSub():
+
+@app.route('/addmovie/submit',methods=['POST'])
+def add_movieSub():
+	title = request.form['mname']
+	rating = request.form['mrating']
+	desc = request.form['desc']
+	img = request.form['image']
+	lang = request.form['lang']
+	genre = request.form['genre']
+	db.add_movies(title, desc, rating, lang, img)
+	return redirect('admin')
+
+# @app.route('/remmovie/submit',methods=['POST'])
+# def rem_movieSub():
+
 # @app.route('/change_show',method=['POST'])
 # def change_show():
 

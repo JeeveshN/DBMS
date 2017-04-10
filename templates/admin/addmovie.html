@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--================================================================================
+  Item Name: Materialize - Material Design Admin Template
+  Version: 3.1
+  Author: GeeksLabs
+  Author URL: http://www.themeforest.net/user/geekslabs
+================================================================================ -->
+
+<head>
+  <title>Movie Ticketing System for Single Cinema Complex</title>
+  
+  <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
+  <link href="static/css/style.min.css" type="text/css" rel="stylesheet">
+  <link href="static/css/page-center.css" type="text/css" rel="stylesheet">
+
+</head>
+
+<body class="cyan">
+  <!-- <div id="login-page" class="row"> -->
+    <div class="col s12 z-depth-4 card-panel">
+      <form class="login-form" action="/addmovie/submit" method="POST">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <p class="center login-form-text">Add Movie</p>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="mname" id="mname" type="text" maxlength="50" required>
+            <label for="mname" class="center-align">Movie Name</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <select name="mrating" class="browser-default">
+              <option value="" disabled>Movie Rating</option>
+              <option value="U">U</option>
+              <option value="U/A">U/A</option>
+              <option value="A">A</option>
+            </select>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="desc" id="desc" type="text" required>
+            <label for="desc" class="center-align">Description</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12 file-field">
+            <div class="btn">
+            <span>Image</span>
+               <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+               <input class="file-path validate" type="text" name="image" placeholder="Upload image">
+            </div>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="lang" id="lang" type="text" required>
+            <label for="lang" class="center-align">Language</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="genre" id="genre" type="text" required>
+            <label for="genre" class="center-align">Genre (Comma separated)</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <button type="submit" class="btn waves-effect waves-light col s12">Submit</button>
+          </div>
+        </div>
+
+        <div class="row">
+        </div>
+
+      </form>
+    </div>
+  <!-- </div> -->
+
+
+
+  <!-- jQuery Library -->
+  <script type="text/javascript" src="static/js/jquery-1.11.2.min.js"></script>
+  <!--materialize js-->
+  <script type="text/javascript" src="static/js/materialize.min.js"></script>
+  
+</body>
+</html>
