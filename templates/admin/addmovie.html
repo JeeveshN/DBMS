@@ -10,7 +10,6 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
@@ -49,14 +48,9 @@
           </div>
         </div>
         <div class="row margin">
-          <div class="input-field col s12 file-field">
-            <div class="btn">
-            <span>Image</span>
-               <input type="file">
-            </div>
-            <div class="file-path-wrapper">
-               <input class="file-path validate" type="text" name="image" placeholder="Upload image">
-            </div>
+          <div class="input-field col s12">
+            <input name="img" id="lang" type="text" required>
+            <label for="img" class="center-align">Image Url</label>
           </div>
         </div>
         <div class="row margin">
@@ -91,6 +85,5 @@
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 
-  
 </body>
 </html>

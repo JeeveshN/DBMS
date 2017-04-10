@@ -1,5 +1,5 @@
-create database project;
-use project;
+create database project1;
+use project1;
 
 CREATE TABLE hall (
 	hid INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +39,7 @@ CREATE TABLE movie_genre (
 );
 
 CREATE TABLE shows (
-	hid INTEGER,
+		hid INTEGER,
     mid INTEGER,
     time DATETIME NOT NULL,
     avail INTEGER DEFAULT 0,
@@ -167,11 +167,11 @@ INSERT INTO has_seats(hid, sid, type) VALUES (4, 10, "Silver");
 INSERT INTO has_seats(hid, sid, type) VALUES (4, 11, "Silver");
 INSERT INTO has_seats(hid, sid, type) VALUES (4, 12, "Silver");
 
-INSERT INTO movie(title, rating, lang) VALUES ("Colossal", "A", "English");
-INSERT INTO movie(title, rating, lang) VALUES ("Ghost in the Shell", "A", "English");
-INSERT INTO movie(title, rating, lang) VALUES ("The Boss Baby", "U/A", "English");
-INSERT INTO movie(title, rating, lang) VALUES ("Jolly LLB 2", "U/A", "Hindi");
-INSERT INTO movie(title, rating, lang) VALUES ("Dangal", "U/A", "Hindi");
+INSERT INTO movie(title, rating, lang,img) VALUES ("Colossal", "A", "English",'sda');
+INSERT INTO movie(title, rating, lang,img) VALUES ("Ghost in the Shell", "A", "English",'asd');
+INSERT INTO movie(title, rating, lang,img) VALUES ("The Boss Baby", "U/A", "English",'rgw');
+INSERT INTO movie(title, rating, lang,img) VALUES ("Jolly LLB 2", "U/A", "Hindi",'sfgerg');
+INSERT INTO movie(title, rating, lang,img) VALUES ("Dangal", "U/A", "Hindi",'asdfa');
 
 INSERT INTO movie_genre(mid, genre) VALUES (5, "Biography");
 INSERT INTO movie_genre(mid, genre) VALUES (5, "Sports");

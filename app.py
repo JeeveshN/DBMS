@@ -5,8 +5,8 @@ import re
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
-app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
@@ -93,6 +93,20 @@ def add_show_sub():
     time = time+":00"
     db.add_show(int(hid),int(mid),time)
     return redirect('admin')
+
+@app.route('/show_halls')
+def show_halls():
+	halls = db.get_halls()
+	return render_template('admin/halls.html',halls=halls)
+
+@app.route('/show_hall_movies',methods=['POST'])
+def show_hall_movies():
+	hid = int(request.form['hall'])
+	shows = db.get_shows_of_hall(hid)
+	print shows
+	return render_template('/admin/all_shows.html',shows=shows)
+
+
 
 # @app.route('/remshow/submit',methods=['POST'])
 # def rem_show_sub():

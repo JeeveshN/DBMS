@@ -10,10 +10,11 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
+
 
 </head>
 
@@ -48,7 +49,7 @@
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <input id="time" name="time" type="datetime-local"> Timings </input>
+            <input id="time" name="time" type="datetime-local"></input>
           </div>
         </div>
         <div class="row">
@@ -68,8 +69,7 @@
   <!-- jQuery Library -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
-  <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 
-  
+  <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 </body>
 </html>
