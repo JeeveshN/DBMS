@@ -1,4 +1,5 @@
 from flaskext.mysql import MySQL
+from datetime import datetime, timedelta
 
 class Database():
 
@@ -141,8 +142,25 @@ class Database():
 			json.append(x)
 		return json
 
-	# def book_show(self,hid,sid_list):
-	# 	for sid in sid_list:
-	# 		query = "INSERT INTO seats_booked"
+	# Done
+	def add_show(self, hid, mid, time):
+		newt = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
+		if newt<datetime.now():
+			return 'Old date'
+		self.cursor.execute("SELECT time FROM shows WHERE hid=%d"%hid)
+		for t in self.cursor.fetchall():
+			oldt = t[0]
+			dif = ''
+			if(oldt>newt):
+				dif = oldt-newt
+			else:
+				dif = newt-oldt
+			if timedelta.total_seconds(dif)<7200:
+				return 'Intersects slot'
+		self.cursor.execute("INSERT INTO shows(hid, mid, time) VALUES(%d, %d, '%s')"%(hid,mid,time))
+		self.conn.commit()
+		return 'Success'
+
+
 
 
