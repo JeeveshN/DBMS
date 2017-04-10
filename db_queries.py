@@ -50,6 +50,7 @@ class Database():
 	def delete_hall(self, hid):
 		hid = str(hid)
 		self.cursor.execute("DELETE FROM hall WHERE hid=%s" % (hid))
+		self.conn.commit()
 
 	def get_movies(self):
 		self.cursor.execute("select * from movie")
