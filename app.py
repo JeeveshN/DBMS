@@ -1,29 +1,82 @@
 from flask import Flask,render_template,redirect,url_for,request,flash,session
+from db_queries import Database
 
 app = Flask(__name__)
+app.secret_key = 'DBMS'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'N@1901root'
+app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+db = Database(app)
 
 def authorize(u,p):
 	return None
 
+
 @app.route('/')
+@app.route('/index')
 def index():
-	return render_template('index.html',incorrect='True')
+	# if 'user' in session:
+	# 	if session['user'] == 'User':
+	# 		return redirect('user')
+	# 	else:
+	# 		return redirect('admin')
+	return render_template('index.html')
 
 @app.route('/login/submit', methods=['POST'])
 def loginSub():
-	user = request.form['email']
+	userid = request.form['email']
 	password = request.form['password']
-	auth = authorize(userid,password)
-	print auth
-	# if auth is not None:
-	# 	session.push('user',auth)
-	# 	if(auth=='user'):
-	# 		return render_template
-	# 	else:
-	# 		return render_template
-	# else:
-	# 	return render_template('index.html',incorrect='True')
-	return ('OK')
+	auth = db.auth_user(userid,password)
+	print(auth)
+	if auth is not None:
+		session['user']=auth
+		if auth=='User':
+			return('User')
+		else:
+			return redirect('admin')
+	else:
+		return redirect('')
+
+@app.route('/admin')
+def admin():
+	# if not 'user' in session:
+	# 	return redirect('')
+	# elif session['user'] is not 'Admin':
+	# 	return redirect('')
+	return render_template('admin.html')
+
+@app.route('/user')
+def user():
+	# if not 'user' in session:
+	# 	return redirect('')
+	# elif session['user'] is not 'User':
+	# 	return redirect('')
+	return render_template('user.html')
+
+@app.route('/addshow')
+def add_show():
+	return ('Add Show')
+
+@app.route('/remshow')
+def rem_show():
+	return ('Remove Show')
+
+@app.route('/addhall')
+def add_hall():
+	return ('Add Hall')
+
+@app.route('/remhall')
+def rem_hall():
+	return ('Remove Show')
+
+@app.route('/addmovie')
+def add_movie():
+	return ('Add Movie')
+
+@app.route('/remmovie')
+def rem_movie():
+	return ('Remove Movie')
 # @app.route('/change_show',method=['POST'])
 # def change_show():
 

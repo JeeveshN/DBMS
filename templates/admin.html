@@ -14,13 +14,32 @@
   <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
   <link href="static/css/style.min.css" type="text/css" rel="stylesheet">
   <link href="static/css/page-center.css" type="text/css" rel="stylesheet">
-
+  
 </head>
 
 <body class="cyan">
-  <div id="login-page" class="row">
-    <div class="col s12 z-depth-4 card-panel">
-      <form class="login-form" action="/login/submit" method="POST">
+  <div class="row">
+    <div class="col s12">
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('add_hall')}}">Add Hall</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('rem_hall')}}">Remove Hall</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('add_movie')}}">Add Movie</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('rem_movie')}}">Remove Movie</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('add_show')}}">Add Show</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect waves-light col s12" href="{{url_for('rem_show')}}">Remove Show</a>
+      </div>
+
+   <!--    <form class="login-form" action="/login/submit" method="POST">
         <div class="row">
           <div class="input-field col s12 center">
             <p class="center login-form-text">Movie Ticket Booking System for Single Cinema</p>
@@ -28,26 +47,16 @@
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <!-- <i class="mdi-social-person-outline prefix"></i> -->
             <input name="email" id="email" type="text">
             <label for="email" class="center-align">Email</label>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <!-- <i class="mdi-action-lock-outline prefix"></i> -->
             <input name="password" id="password" type="password">
             <label for="password">Password</label>
           </div>
         </div>
-        {% if incorrect == True %}
-        <div class="row">
-          <div class="input-field col s6 m6 l6">
-            <p class="margin medium-small">Incorrect Username or Password!</p>
-          </div>
-        </div>
-        {% endif %}
-
         <div class="row">
           <div class="input-field col s12">
             <button type="submit" class="btn waves-effect waves-light col s12">Login</button>
@@ -56,12 +65,10 @@
         <div class="row">
         </div>
 
-      </form>
+      </form> -->
     </div>
   </div>
-
-
-
+ 
   <!-- jQuery Library -->
   <script type="text/javascript" src="static/js/jquery-1.11.2.min.js"></script>
   <!--materialize js-->
