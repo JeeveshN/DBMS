@@ -203,6 +203,8 @@ class Database():
 		print res
 		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
 			x = {
+				'hid':hid,
+				'h_name':h_name,
 				"title": title,
 				"img":img,
 				"descr":descr,

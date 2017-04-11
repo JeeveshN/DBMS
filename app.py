@@ -101,10 +101,13 @@ def show_halls():
 
 @app.route('/show_hall_movies',methods=['POST'])
 def show_hall_movies():
-	hid = int(request.form['hall'])
-	shows = db.get_shows_of_hall(hid)
-	print shows
-	return render_template('/admin/all_shows.html',shows=shows)
+	if request.form['hall']=='All':
+		shows=db.get_movies()
+		return render_template('/admin/all_shows.html',shows=shows)
+	else:
+		hid = int(request.form['hall'])
+		shows = db.get_shows_of_hall(hid)
+		return render_template('/admin/all_shows.html',shows=shows)
 
 
 

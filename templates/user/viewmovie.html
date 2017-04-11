@@ -10,7 +10,7 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
@@ -30,11 +30,12 @@
         <div class="col s12">
           <div class="card">
             <div class="card-image">
-              <img src="https://thumb7.shutterstock.com/display_pic_with_logo/64260/288277301/stock-photo-balanced-diet-cooking-culinary-and-food-concept-close-up-of-vegetables-fruits-and-meat-on-288277301.jpg">
+              <img src="{{ movie[0]['img'] }}">
               <span class="card-title">{{movie[0]['title']}}</span>
             </div>
             <div class="card-content">
               <p>{{movie[0]['descr']}}</p>
+              <p>{{movie[0]['rating']}}</p>
             </div>
           </div>
         </div>
@@ -49,6 +50,6 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-  
+
 </body>
 </html>

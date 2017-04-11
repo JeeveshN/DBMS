@@ -29,7 +29,7 @@
         <div class="row margin">
           <div class="input-field col s12">
             <select name="hall" class="browser-default">
-              <option value="" disabled>Hall</option>
+              <option value="All">All Movies</option>
               {% for hall in halls %}
               <option value="{{ hall['hid'] }}">{{ hall['h_name'] }}</option>
               {% endfor %}
