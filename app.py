@@ -5,8 +5,8 @@ import re
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
-app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
@@ -31,10 +31,10 @@ def index():
 def loginSub():
     userid = request.form['email']
     password = request.form['password']
-    auth,uid = db.auth_user(userid,password)
     if auth is None:
-        return redirect('')
+        return redirect('/')
     else:
+        auth,uid = db.auth_user(userid,password)
         if auth=='User':
             session['user']=uid
             return redirect('user.html')

@@ -13,6 +13,7 @@ class Database():
 	def auth_user(self, id, pwd):
 		self.cursor.execute("SELECT type,uid FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
 		res = self.cursor.fetchall()
+		print res
 		try:
 			type = res[0][0]
 		except:

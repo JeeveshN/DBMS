@@ -203,6 +203,7 @@ INSERT INTO shows(hid, mid, time) VALUES (2, 3, "2017-04-12 17:00:00");
 INSERT INTO user(fname, lname, email, pass, phno, type) VALUES ("Naman", "Maheshwari", "naman1901@gmail.com", "password", "9716555025", "Admin");
 INSERT INTO user(fname, lname, email, pass, phno, type) VALUES ("Mohit", "Sharma", "iammohitsharma@gmail.com", "password", "9958832882", "Admin");
 INSERT INTO user(fname, lname, email, pass, phno, type) VALUES ("Jeevesh", "Narang", "narang.jeevesh@gmail.com", "password", "9654832882", "Admin");
+INSERT INTO user(fname, lname, email, pass, phno, type) VALUES ("Kunal", "Kardam", "kunal.kardam@gmail.com", "password", "9678923455", "User");
 
 UPDATE movie SET descr = "After losing her job and boyfriend in New York City, Gloria (Anne Hathaway) moves back to her hometown in upstate New York only to discover how strangely connected she is to an enormous giant monster attacking Seoul, South Korea." where mid = 1;
 UPDATE movie SET descr = "Ghost in the Shell is a 2017 American science fiction action film directed by Rupert Sanders and written by Jamie Moss, William Wheeler and Ehren Kruger, based on the Japanese manga of the same name by Masamune Shirow. The film stars Scarlett Johansson, Takeshi Kitano, Michael Pitt, Pilou Asbæk, Chin Han and Juliette Binoche. Set in the near future where the line between humans and robots is becoming blurred, the plot follows a woman who has her brain placed in a cyborg body to become the perfect soldier and who yearns to learn of her past." where mid = 2;
