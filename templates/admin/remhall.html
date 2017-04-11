@@ -10,7 +10,7 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
@@ -29,7 +29,7 @@
         {% for hall in halls %}
           <div class="row remb" id="{{hall['hid']}}">
             <button class="center waves-effect waves-light col s12">{{hall['h_name']}}</button>
-          </div>          
+          </div>
         {% endfor %}
         </div>
       <form class="login-form" action="/remhall/submit" method="POST">
@@ -38,7 +38,7 @@
             <div class="input-field col s12">
               <button type="submit" class="btn waves-effect waves-light col s12">Remove</button>
             </div>
-          </div>    
+          </div>
       </form>
     </div>
   <!-- </div> -->
@@ -50,7 +50,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('.remb').click(function(){
+      $('.remb').onclick(function(){
         $('#del').value = this.id;
       });
     });

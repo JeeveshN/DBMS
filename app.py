@@ -5,51 +5,60 @@ import re,json
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
-app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
+<<<<<<< HEAD
+=======
+def chech_admin():
+    if 'admin' in session:
+        return True
+    return False
+
+def check_user():
+    if 'user' in session:
+        return True
+    return False
+
+>>>>>>> 0665118d7706bd40232eec3706078a6553b6c5c5
 @app.route('/')
 @app.route('/index')
 def index():
-    # if 'user' in session:
-    #   if session['user'] == 'User':
-    #       return redirect('user')
-    #   else:
-    #       return redirect('admin')
-    return render_template('index.html')
+     if check_user():
+        return render_template('user.html')
+     return render_template('index.html')
 
 @app.route('/login/submit', methods=['POST'])
 def loginSub():
     userid = request.form['email']
     password = request.form['password']
-    auth = db.auth_user(userid,password)
-    print(auth)
-    if auth is not None:
-        session['user']=auth
-        if auth=='User':
-            return('User')
-        else:
-            return redirect('admin')
+    if db.auth_user(userid,password) is None:
+        return redirect('/')
     else:
-        return redirect('')
+        auth,uid = db.auth_user(userid,password)
+        if auth=='User':
+            session['user']=uid
+            return render_template('user.html')
+        else:
+            session['admin']=uid
+            return redirect('admin')
+
 
 @app.route('/admin')
 def admin():
-    # if not 'user' in session:
-    #   return redirect('')
-    # elif session['user'] is not 'Admin':
-    #   return redirect('')
-    return render_template('admin.html')
+    if chech_admin():
+        return render_template('admin.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/user')
 def user():
-    # if not 'user' in session:
-    #   return redirect('')
-    # elif session['user'] is not 'User':
-    #   return redirect('')
-    return render_template('user.html')
+    if check_user():
+        return render_template('user.html')
+    else:
+        return redirect('/')
 
 @app.route('/addshow')
 def add_show():
@@ -105,8 +114,16 @@ def show_hall_movies():
         shows = db.get_shows_of_hall(hid)
         return render_template('/admin/all_shows.html',shows=shows)
 
-# @app.route('/remshow/submit',methods=['POST'])
-# def rem_show_sub():
+@app.route('/remshow/submit',methods=['POST'])
+def rem_show_sub():
+    hid = int(request.form['hid'])
+    mid = int(request.form['mid'])
+    time = request.form['time']
+    print hid,mid,time
+    if hid and mid and time:
+        print "Sdfdf"
+        db.delete_show(hid,mid,time)
+    return redirect('admin')
 
 @app.route('/addhall/submit',methods=['POST'])
 def add_hall_sub():
@@ -130,14 +147,19 @@ def add_movie_sub():
     title = request.form['mname']
     rating = request.form['mrating']
     desc = request.form['desc']
-    img = request.form['image']
+    desc = re.sub("\'","",desc)
+    desc = re.sub("\"","",desc)
+    img = request.form['img']
     lang = request.form['lang']
     genre = request.form['genre']
     db.add_movie(title, desc, rating, lang, img, genre)
     return redirect('admin')
 
-# @app.route('/remmovie/submit',methods=['POST'])
-# def rem_movie_sub():
+@app.route('/remmovie/submit',methods=['POST'])
+def rem_movie_sub():
+    mid = request.form['movie']
+    db.delete_movie(mid)
+    return redirect('admin')
 
 @app.route('/viewmovie')
 def view_movie():
@@ -217,6 +239,16 @@ def pay_sub():
     res = eval(res)
     success = db.book(res['mid'], res['hid'], res['time'], res['uid'], res['seat_list'])
     return (success)
+
+@app.route('/logout_admin')
+def logout_admin():
+    session.pop('admin',None)
+    return redirect('/')
+
+@app.route('/logout_user')
+def logout_user():
+    session.pop('user',None)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

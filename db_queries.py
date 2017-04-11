@@ -11,13 +11,14 @@ class Database():
 
 	# Done
 	def auth_user(self, id, pwd):
-		self.cursor.execute("SELECT type FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
+		self.cursor.execute("SELECT type,uid FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
 		res = self.cursor.fetchall()
+		print res
 		try:
 			type = res[0][0]
 		except:
 			return None
-		return type
+		return type,res[0][1]
 
 	# Done
 	def get_halls(self):
@@ -167,9 +168,12 @@ class Database():
 
 	# Done
 	def delete_show(self, hid, mid, time):
-		if not isinstance(time, str):
+		try:
 			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		except:
+			pass
 		print(time)
+		print("DELETE FROM shows WHERE hid=%d AND mid=%d AND time='%s'"%(hid, mid, time))
 		self.cursor.execute("DELETE FROM shows WHERE hid=%d AND mid=%d AND time='%s'"%(hid, mid, time))
 		self.conn.commit()
 		return 'Success'
@@ -185,7 +189,7 @@ class Database():
 		self.cursor.execute("SELECT * FROM hall NATURAL JOIN shows NATURAL JOIN movie WHERE mid=%d AND time>'%s'"%(mid, d))
 		res = self.cursor.fetchall()
 		json = []
-		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
+		for (mid,hid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
 			x = {
 				"mid": mid,
 				"hid": hid,
@@ -200,9 +204,10 @@ class Database():
 		self.cursor.execute("SELECT * FROM hall NATURAL JOIN shows NATURAL JOIN movie WHERE hid=%d" %hid)
 		res = self.cursor.fetchall()
 		json = []
-		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
+		for (mid,hid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
 			x = {
 				'hid':hid,
+				'mid':mid,
 				'h_name':h_name,
 				"title": title,
 				"img":img,
