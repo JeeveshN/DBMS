@@ -10,11 +10,11 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
-  
+
 </head>
 
 <body class="cyan">
@@ -25,6 +25,9 @@
       </div>
       <div class ="row">
         <a class="btn waves-effect waves-light col s12" href="{{url_for('all_movie')}}">View Movie Listing</a>
+      </div>
+      <div class ="row">
+        <a class="btn waves-effect red col s12" href="{{url_for('logout_user')}}">Log Out</a>
       </div>
    <!--    <form class="login-form" action="/login/submit" method="POST">
         <div class="row">
@@ -55,11 +58,11 @@
       </form> -->
     </div>
   </div>
- 
+
   <!-- jQuery Library -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-  
+
 </body>
 </html>

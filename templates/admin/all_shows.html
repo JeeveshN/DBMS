@@ -35,10 +35,22 @@
       <p><a href="#">{{show['time']}}</a></p>
     </div>
     <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">{{show['title']}}<i class="material-icons right">close</i></span>
+      <span class="card-title grey-text text-darken-4">{{show['title']}}<i class="material-icons right">X</i></span>
       <p>{{ show['descr'] }}</p>
       <h5>Available:</h5>
       <p>{{ show['avail'] }}</p>
+      <form class="login-form" action="/remshow/submit" method="POST">
+      {% if show['hid'] is defined%}
+      <div class="row">
+        <input type="hidden" name='hid' value="{{ show['hid'] }}"></input>
+        <input type="hidden" name='mid' value="{{ show['mid'] }}"></input>
+        <input type="hidden" name='time' value="{{ show['time'] }}"></input>
+        <div class="input-field col s12">
+          <button type="submit" class="btn waves-effect waves-light col s12">Delete</button>
+        </div>
+      </div>
+      {% endif %}
+    </form>
     </div>
     <div style="height:50px">
     </div>

@@ -24,7 +24,7 @@ def check_user():
 @app.route('/index')
 def index():
      if check_user():
-        return redirect('user.html')
+        return render_template('user.html')
      return render_template('index.html')
 
 @app.route('/login/submit', methods=['POST'])
@@ -48,7 +48,7 @@ def admin():
     if chech_admin():
         return render_template('admin.html')
     else:
-        return redirect('/')
+        return render_template('index.html')
 
 @app.route('/user')
 def user():
@@ -111,8 +111,16 @@ def show_hall_movies():
 		shows = db.get_shows_of_hall(hid)
 		return render_template('/admin/all_shows.html',shows=shows)
 
-# @app.route('/remshow/submit',methods=['POST'])
-# def rem_show_sub():
+@app.route('/remshow/submit',methods=['POST'])
+def rem_show_sub():
+    hid = int(request.form['hid'])
+    mid = int(request.form['mid'])
+    time = request.form['time']
+    print hid,mid,time
+    if hid and mid and time:
+        print "Sdfdf"
+        db.delete_show(hid,mid,time)
+    return redirect('admin')
 
 @app.route('/addhall/submit',methods=['POST'])
 def add_hall_sub():
