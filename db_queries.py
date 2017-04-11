@@ -11,13 +11,13 @@ class Database():
 
 	# Done
 	def auth_user(self, id, pwd):
-		self.cursor.execute("SELECT type FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
+		self.cursor.execute("SELECT type,uid FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
 		res = self.cursor.fetchall()
 		try:
 			type = res[0][0]
 		except:
 			return None
-		return type
+		return type,res[0][1]
 
 	# Done
 	def get_halls(self):

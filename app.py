@@ -10,50 +10,52 @@ app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
-def authorize(u,p):
-    return None
+def chech_admin():
+    if 'admin' in session:
+        return True
+    return False
 
+def check_user():
+    if 'user' in session:
+        return True
+    return False
 
 @app.route('/')
 @app.route('/index')
 def index():
-    # if 'user' in session:
-    #   if session['user'] == 'User':
-    #       return redirect('user')
-    #   else:
-    #       return redirect('admin')
-    return render_template('index.html')
+     if check_user():
+        return redirect('user.html')
+     return render_template('index.html')
 
 @app.route('/login/submit', methods=['POST'])
 def loginSub():
     userid = request.form['email']
     password = request.form['password']
-    auth = db.auth_user(userid,password)
-    print(auth)
-    if auth is not None:
-        session['user']=auth
-        if auth=='User':
-            return('User')
-        else:
-            return redirect('admin')
-    else:
+    auth,uid = db.auth_user(userid,password)
+    if auth is None:
         return redirect('')
+    else:
+        if auth=='User':
+            session['user']=uid
+            return redirect('user.html')
+        else:
+            session['admin']=uid
+            return redirect('admin')
+
 
 @app.route('/admin')
 def admin():
-    # if not 'user' in session:
-    #   return redirect('')
-    # elif session['user'] is not 'Admin':
-    #   return redirect('')
-    return render_template('admin.html')
+    if chech_admin():
+        return render_template('admin.html')
+    else:
+        return redirect('/')
 
 @app.route('/user')
 def user():
-    # if not 'user' in session:
-    #   return redirect('')
-    # elif session['user'] is not 'User':
-    #   return redirect('')
-    return render_template('user.html')
+    if check_user():
+        return render_template('user.html')
+    else:
+        return redirect('/')
 
 @app.route('/addshow')
 def add_show():
@@ -136,7 +138,9 @@ def add_movie_sub():
     title = request.form['mname']
     rating = request.form['mrating']
     desc = request.form['desc']
-    img = request.form['image']
+    desc = re.sub("\'","",desc)
+    desc = re.sub("\"","",desc)
+    img = request.form['img']
     lang = request.form['lang']
     genre = request.form['genre']
     db.add_movie(title, desc, rating, lang, img, genre)
@@ -186,6 +190,16 @@ def getseats():
     hall = res[1]
     time = res[2]
     db.get_seats(mid,hall,time)
+
+@app.route('/logout_admin')
+def logout_admin():
+    session.pop('admin',None)
+    return redirect('/')
+
+@app.route('/logout_user')
+def logout_user():
+    session.pop('user',None)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
