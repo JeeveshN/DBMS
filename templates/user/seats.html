@@ -35,6 +35,85 @@
     text-align: center;
 }
 
+.screen {
+  height: 90px;
+  line-height: 90px;
+  text-align: center;
+  border: 2px dashed #f69c55;
+
+}
+
+.corner-ribbon{
+  width: 200px;
+  background: #e43;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+/* Custom styles */
+
+.corner-ribbon.sticky{
+  /*position: fixed;*/
+}
+
+.corner-ribbon.shadow{
+  box-shadow: 0 0 3px rgba(0,0,0,.3);
+}
+
+/* Different positions */
+
+.corner-ribbon.top-left{
+  top: 25px;
+  left: -50px;
+/*  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);*/
+}
+
+.corner-ribbon.top-right{
+  top: 25px;
+  right: -50px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-left{
+  top: auto;
+  bottom: auto;
+  left: -50px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-right{
+  top: auto;
+  right: -50px;
+  bottom: auto;
+  left: auto;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+/* Colors */
+
+.corner-ribbon.white{background: #f0f0f0; color: #555;}
+.corner-ribbon.black{background: #333;}
+.corner-ribbon.grey{background: #999;}
+.corner-ribbon.blue{background: #39d;}
+.corner-ribbon.green{background: #2c7;}
+.corner-ribbon.turquoise{background: #1b9;}
+.corner-ribbon.purple{background: #95b;}
+.corner-ribbon.red{background: #e43;}
+.corner-ribbon.orange{background: #e82;}
+.corner-ribbon.yellow{background: #ec0;}
+
   </style>
 </head>
 <body class="white">
@@ -57,11 +136,19 @@
 {% endfor %}
   </div>
 </div>
+<div class="row" ></div>
+<div class="row" ></div>
+<div class="corner-ribbon bottom-left sticky green shadow">Exit</div>
+<div class="corner-ribbon bottom-right sticky green shadow">Exit</div>
+<div class="screen">
+  SCREEN
+</div>
 <form method="post" action="/payment">
 <input type="text" id="del" name="del" hidden required>
 <input type="text" id="res" name="res" hidden required value="{{res}}">
-
+<div class="row">
 <button type="submit" class="btn waves-effect waves-light col s4 offset-s4">Select Seats and Proceed To Payment</button>    
+</div>
 </form>
 
 </body>

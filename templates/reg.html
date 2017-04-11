@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 3.1
-	Author: GeeksLabs
-	Author URL: http://www.themeforest.net/user/geekslabs
-================================================================================ -->
-
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
   
@@ -20,7 +13,7 @@
 <body class="cyan">
   <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-      <form class="login-form" action="/login/submit" method="POST">
+      <form class="login-form" action="/reg/submit" method="POST">
         <div class="row">
           <div class="input-field col s12 center">
             <p class="center login-form-text">Movie Ticket Booking System for Single Cinema</p>
@@ -28,7 +21,18 @@
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <!-- <i class="mdi-social-person-outline prefix"></i> -->
+            <input name="fname" id="fname" type="text">
+            <label for="fname" class="center-align">First Name</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="lname" id="lname" type="text">
+            <label for="lname" class="center-align">Surname</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
             <input name="email" id="email" type="text">
             <label for="email" class="center-align">Email</label>
           </div>
@@ -40,6 +44,13 @@
             <label for="password">Password</label>
           </div>
         </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <input name="ph" id="ph" type="text" maxlength="10">
+            <label for="ph" class="center-align">Phone</label>
+          </div>
+        </div>
+
 <!--         {% if incorrect == True %}
         <div class="row">
           <div class="input-field col s6 m6 l6">
@@ -50,13 +61,10 @@
  -->
         <div class="row">
           <div class="input-field col s12">
-            <button type="submit" class="btn waves-effect waves-light col s12">Login</button>
+            <button type="submit" class="btn waves-effect waves-light col s12">Register</button>
           </div>
         </div>
         <div class="row">
-        </div>
-        <div class ="row">
-          <a class="btn waves-effect red col s12" href="{{url_for('reg')}}">Register</a>
         </div>
       </form>
     </div>
