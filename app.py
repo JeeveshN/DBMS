@@ -1,6 +1,6 @@
 from flask import Flask,render_template,redirect,url_for,request,flash,session
 from db_queries import Database
-import re
+import re,json
 
 app = Flask(__name__)
 app.secret_key = 'DBMS'
@@ -10,6 +10,8 @@ app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
+<<<<<<< HEAD
+=======
 def chech_admin():
     if 'admin' in session:
         return True
@@ -20,6 +22,7 @@ def check_user():
         return True
     return False
 
+>>>>>>> 0665118d7706bd40232eec3706078a6553b6c5c5
 @app.route('/')
 @app.route('/index')
 def index():
@@ -98,18 +101,18 @@ def add_show_sub():
 
 @app.route('/show_halls')
 def show_halls():
-	halls = db.get_halls()
-	return render_template('admin/halls.html',halls=halls)
+    halls = db.get_halls()
+    return render_template('admin/halls.html',halls=halls)
 
 @app.route('/show_hall_movies',methods=['POST'])
 def show_hall_movies():
-	if request.form['hall']=='All':
-		shows=db.get_movies()
-		return render_template('/admin/all_shows.html',shows=shows)
-	else:
-		hid = int(request.form['hall'])
-		shows = db.get_shows_of_hall(hid)
-		return render_template('/admin/all_shows.html',shows=shows)
+    if request.form['hall']=='All':
+        shows=db.get_movies()
+        return render_template('/admin/all_shows.html',shows=shows)
+    else:
+        hid = int(request.form['hall'])
+        shows = db.get_shows_of_hall(hid)
+        return render_template('/admin/all_shows.html',shows=shows)
 
 @app.route('/remshow/submit',methods=['POST'])
 def rem_show_sub():
@@ -198,6 +201,43 @@ def getseats():
     time = res[2]
     res = db.get_seats(mid,hall,time)
     return render_template('user/seats.html',res=res)
+
+@app.route('/payment',methods=['POST'])
+def pay():
+    seats = request.form['del']
+    seats = seats.split(',')
+    seat_list = [ int(x) for x in seats ]
+    res = request.form['res']
+    res = eval(res)
+    uid = session['user']
+    price = {}
+    price['Platinum'] = 250
+    price['Silver'] = 150
+    price['Gold'] = 200
+    np = 0
+    ng = 0
+    ns = 0
+    cost = 0
+    a = 0
+    for x in seat_list:
+        a = price[res['seat_type'][x]]
+        if a == 250:
+            np+=1
+        elif a==200:
+            ng+=1
+        else:
+            ns+=1
+        cost += a
+    j = {'mid':res['mid'],'hid':res['hid'],'time':res['time'],'uid':uid,'seat_list':seat_list,'cost':cost,'num':[np,ng,ns]}
+    return render_template('user/pay.html',res=j)
+    # success = db.book(res['mid'], res['hid'], res['time'], uid, seat_list)
+
+@app.route('/payment/success',methods=['POST'])
+def pay_sub():
+    res = request.form['res']
+    res = eval(res)
+    success = db.book(res['mid'], res['hid'], res['time'], res['uid'], res['seat_list'])
+    return (success)
 
 @app.route('/logout_admin')
 def logout_admin():

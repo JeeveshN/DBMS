@@ -1,65 +1,90 @@
-{{res}}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
-  <!-- <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet"> -->
-  <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/seats.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
+  <!-- <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet"> -->
+  <!-- <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet"> -->
+  <!-- <link href="{{ url_for('static', filename='css/seats.css') }}" type="text/css" rel="stylesheet"> -->
+  <style>
+   
+.seat-green {
+    display: block;
+    margin: 5px;
+    background: #4CAF50;
+    width: 100px;
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
+}
 
+.spann {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.seat-red {
+    /*display: block;*/
+    margin: 5px;
+    background: #F44336;
+    width: 100px;
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
+}
+
+  </style>
 </head>
+<body class="white">
+<div id="seats">
+  <div class="row blue-grey lighten-4">
+{% set rows = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'] %}
+{% set row_name = rows[0]%}
+{% for x in res['seats'] %}
+  {% if loop.index % 10 == 6 %}
+  <div class="seat seat-green col offset-s2" id="{{loop.index}}" {% if res['seats'][x] !='avail' %} style="pointer-events: none; background: #c9c9c9;" {% endif %}><span class="spann">{{rows[loop.index//11]}}{{loop.index%11}}</span></div>
+  {% else %}
+  <div class="seat seat-green col" id="{{loop.index}}" {% if res['seats'][x] !='avail' %} style="pointer-events: none; background: #c9c9c9;" {% endif %}><span class="spann">{{rows[loop.index//11]}}{{loop.index%11}}</span></div>  
+  {% endif %}
+  {% if loop.index % 10 == 0 %}
+  
+  {% set row_name = rows[loop.index/10]%}
+  </div>
+  <div class="row {%if res['seat_type'][loop.index]=='Platinum' %} blue-grey lighten-4 {% elif res['seat_type'][loop.index]=='Silver' %} blue-grey lighten-1 {% else %} yellow darken-3 {% endif %}">
+  {% endif %}
+{% endfor %}
+  </div>
+</div>
+<form method="post" action="/payment">
+<input type="text" id="del" name="del" hidden required>
+<input type="text" id="res" name="res" hidden required value="{{res}}">
 
-<body class="cyan">
-    <ol class="seats" type="A">
-        <li class="seat">
-          <input type="checkbox" id="A1" />
-          <label for="A1">A1</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A2" />
-          <label for="A2">A2</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A3" />
-          <label for="A3">A3</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A4" />
-          <label for="A4">A4</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A5" />
-          <label for="A5">A5</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A6" />
-          <label for="A6">A6</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A7" />
-          <label for="A7">A7</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A8" />
-          <label for="A8">A8</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A9" />
-          <label for="A9">A9</label>
-        </li>
-        <li class="seat">
-          <input type="checkbox" id="A10" />
-          <label for="A10">A10</label>
-        </li>
-      </ol>
+<button type="submit" class="btn waves-effect waves-light col s4 offset-s4">Select Seats and Proceed To Payment</button>    
+</form>
 
+</body>
   <!-- jQuery Library -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-  
-</body>
+
+  <script>
+    arr = []
+    $(document).ready(function() {
+      $('.seat').click(function(){
+        $(this).toggleClass('seat-green');
+        $(this).toggleClass('seat-red');
+        if(arr.indexOf(this.id) === -1)
+          arr.push(this.id)
+        else
+        arr.splice(arr.indexOf(this.id),1)
+        res = arr.toString()
+        inp = document.getElementById('del');
+        inp.value = res;
+        console.log(inp.value)
+      });
+    });
+  </script>
 </html>
