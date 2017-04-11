@@ -5,8 +5,8 @@ import re
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
-app.config['MYSQL_DATABASE_DB'] = 'project1'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
+app.config['MYSQL_DATABASE_DB'] = 'project'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
@@ -103,10 +103,7 @@ def show_halls():
 def show_hall_movies():
 	hid = int(request.form['hall'])
 	shows = db.get_shows_of_hall(hid)
-	print shows
 	return render_template('/admin/all_shows.html',shows=shows)
-
-
 
 # @app.route('/remshow/submit',methods=['POST'])
 # def rem_show_sub():
@@ -177,12 +174,12 @@ def search_movie_sub():
 @app.route('/getseats',methods=['POST'])
 def getseats():
     res = request.form['hall']
-    print(res)
     res = res.split(',')
     mid = res[0]
     hall = res[1]
     time = res[2]
-    db.get_seats(mid,hall,time)
+    res = db.get_seats(mid,hall,time)
+    return render_template('user/seats.html',res=res)
 
 if __name__ == '__main__':
     app.run(debug=True)

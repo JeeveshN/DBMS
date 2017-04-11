@@ -200,7 +200,6 @@ class Database():
 		self.cursor.execute("SELECT * FROM hall NATURAL JOIN shows NATURAL JOIN movie WHERE hid=%d" %hid)
 		res = self.cursor.fetchall()
 		json = []
-		print res
 		for (hid,mid,h_name,n_seats,time,avail,title,rating,descr,img,lang) in res:
 			x = {
 				"title": title,
@@ -218,17 +217,17 @@ class Database():
 		hid = int(hid)
 		if not isinstance(time, str):
 			time = time.strftime("%Y-%m-%d %H:%M:%S")
-		self.cursor.execute("SELECT bid FROM booking WHERE hid=%d AND mid=%d AND time=%s"%(hid, mid, time))
+		self.cursor.execute("SELECT bid FROM booking WHERE hid=%d AND mid=%d AND time='%s'"%(hid, mid, time))
 		bids = []
 		for b in self.cursor.fetchall():
 			x = b[0]
 			bids.append(x)
 		f_str = ','.join(['%s']*len(bids))
-		self.cursor.execute("SELECT sid FROM seats_booked WHERE hid=%d AND bid in (%s)" % (hid, f_str, tuple(bids)))
+		# self.cursor.execute("SELECT sid FROM seats_booked WHERE hid=%d AND bid in (%s)" % (hid, f_str, tuple(bids)))
 		booked_sids = []
-		for b in self.cursor.fetchall():
-			x = b[0]
-			booked_sids.append(x)
+		# for b in self.cursor.fetchall():
+		# 	x = b[0]
+		# 	booked_sids.append(x)
 		self.cursor.execute("SELECT sid, type FROM has_seats WHERE hid=%d"%hid)
 		sid_status = {}
 		sid_type = {}
