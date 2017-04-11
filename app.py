@@ -5,13 +5,11 @@ import re,json
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
-app.config['MYSQL_DATABASE_DB'] = 'project1'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
+app.config['MYSQL_DATABASE_DB'] = 'project'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
-<<<<<<< HEAD
-=======
 def chech_admin():
     if 'admin' in session:
         return True
@@ -22,7 +20,6 @@ def check_user():
         return True
     return False
 
->>>>>>> 0665118d7706bd40232eec3706078a6553b6c5c5
 @app.route('/')
 @app.route('/index')
 def index():
@@ -119,9 +116,9 @@ def rem_show_sub():
     hid = int(request.form['hid'])
     mid = int(request.form['mid'])
     time = request.form['time']
-    print hid,mid,time
+    # print hid,mid,time
     if hid and mid and time:
-        print "Sdfdf"
+        # print "Sdfdf"
         db.delete_show(hid,mid,time)
     return redirect('admin')
 

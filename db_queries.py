@@ -11,9 +11,9 @@ class Database():
 
 	# Done
 	def auth_user(self, id, pwd):
-		self.cursor.execute("SELECT type,uid FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
+		self.cursor.execute("SELECT type, uid FROM user WHERE email='%s' AND pass='%s'" % (id, pwd))
 		res = self.cursor.fetchall()
-		print res
+		print (res)
 		try:
 			type = res[0][0]
 		except:
@@ -229,12 +229,13 @@ class Database():
 		for b in self.cursor.fetchall():
 			x = b[0]
 			bids.append(x)
-		f_str = ','.join(['%s']*len(bids))
-		# self.cursor.execute("SELECT sid FROM seats_booked WHERE hid=%d AND bid in (%s)" % (hid, f_str, tuple(bids)))
 		booked_sids = []
-		# for b in self.cursor.fetchall():
-		# 	x = b[0]
-		# 	booked_sids.append(x)
+		if len(bids)>0:
+			f_str = ','.join(['%s']*len(bids))
+			self.cursor.execute("SELECT sid FROM seats_booked WHERE hid=%d AND bid in (%s)" % (hid, (f_str % tuple(bids))))
+			for b in self.cursor.fetchall():
+				x = b[0]
+				booked_sids.append(x)
 		self.cursor.execute("SELECT sid, type FROM has_seats WHERE hid=%d"%hid)
 		sid_status = {}
 		sid_type = {}
@@ -266,7 +267,8 @@ class Database():
 		n_seats = 0
 		for _ in seat_list:
 			n_seats += 1
-		self.cursor.execute("INSERT INTO booking(bid, mid, hid, time, uid, n_seats) VALUES(%d, %d, %d, '%s', %d, %d)" % (bid, mid, hid, time, uid, n_seats))
+		self.cursor.execute("INSERT INTO booking(mid, hid, time, uid, n_seats) VALUES(%d, %d, '%s', %d, %d)" % ( mid, hid, time, uid, n_seats))
+		bid = self.cursor.lastrowid
 		for sid in seat_list:
 			self.cursor.execute("INSERT INTO seats_booked(bid, sid, hid) VALUES(%d,%d,%d)"%(bid, sid, hid))
 		self.conn.commit()
