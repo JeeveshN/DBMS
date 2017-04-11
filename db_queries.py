@@ -222,8 +222,10 @@ class Database():
 	def get_seats(self, mid, hid, time):
 		mid = int(mid)
 		hid = int(hid)
-		if not isinstance(time, str):
+		try:
 			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		except:
+			pass
 		self.cursor.execute("SELECT bid FROM booking WHERE hid=%d AND mid=%d AND time='%s'"%(hid, mid, time))
 		bids = []
 		for b in self.cursor.fetchall():
@@ -262,8 +264,10 @@ class Database():
 		mid = int(mid)
 		hid = int(hid)
 		uid = int(uid)
-		if not isinstance(time, str):
+		try:
 			time = time.strftime("%Y-%m-%d %H:%M:%S")
+		except:
+			pass
 		n_seats = 0
 		for _ in seat_list:
 			n_seats += 1
@@ -296,6 +300,23 @@ class Database():
 			}
 			json.append(x)
 		return json
+
+	def get_booked(self,uid):
+		uid = str(uid)
+		query = "SELECT bid, time, title, n_seats,img FROM booking NATURAL JOIN movie WHERE uid=%s"%uid
+		self.cursor.execute(query)
+		b_list = []
+		for (bid, time, title,n_seats,img) in self.cursor.fetchall():
+			x = {
+				"time": time,
+				"title": title,
+				"n_seats": n_seats,
+				'img':img,
+				'bid':bid
+			}
+			b_list.append(x)
+		return b_list
+
 
 
 """

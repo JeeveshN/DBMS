@@ -5,8 +5,8 @@ import re,json
 app = Flask(__name__)
 app.secret_key = 'DBMS'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ms101234321'
-app.config['MYSQL_DATABASE_DB'] = 'project'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'project1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 db = Database(app)
 
@@ -245,6 +245,13 @@ def logout_admin():
 def logout_user():
     session.pop('user',None)
     return redirect('/')
+
+@app.route('/booked')
+def booked():
+    uid = session['user']
+    data = db.get_booked(uid)
+    return render_template('user/booked.html',data=data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
