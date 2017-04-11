@@ -24,11 +24,16 @@
         </div>
       </div>
     </div>
+    <div class="row">
       {%for movie in movies%}
-      <div class="row">
+
+          {% if loop.index is divisibleby(4) %}
+          <div class="row">
+            {% endif %}
+            <div class="col s3">
           <div class="card small">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="https://thumb7.shutterstock.com/display_pic_with_logo/64260/288277301/stock-photo-balanced-diet-cooking-culinary-and-food-concept-close-up-of-vegetables-fruits-and-meat-on-288277301.jpg">
+            <img class="activator" src="{{ movie['img'] }}">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie['title']}}<i class="right">^</i></span>
@@ -40,14 +45,18 @@
           </div>
         </div>
       </div>
+      {% if loop.index is divisibleby(4) %}
+    </div>
+        {% endif %}
       {% endfor %}
+      </div>
 
- 
+
 
   <!-- jQuery Library -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-  
+
 </body>
 </html>
