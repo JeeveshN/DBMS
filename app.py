@@ -118,7 +118,6 @@ def rem_show_sub():
     time = request.form['time']
     # print hid,mid,time
     if hid and mid and time:
-        # print "Sdfdf"
         db.delete_show(hid,mid,time)
     return redirect('admin')
 
