@@ -1,4 +1,4 @@
-{{movies}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +11,7 @@
 
 <head>
   <title>Movie Ticketing System for Single Cinema Complex</title>
-  
+
   <link href="{{ url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/page-center.css') }}" type="text/css" rel="stylesheet">
@@ -19,38 +19,31 @@
 </head>
 
 <body class="cyan">
-  <!-- <div id="login-page" class="row"> -->
-    <div class="col s12 z-depth-4 card-panel">
-      <form class="login-form" action="/remmovie/submit" method="POST">
-        <div class="row">
-          <div class="input-field col s12 center">
-            <p class="center login-form-text">Remove Movie</p>
-          </div>
-        </div>
-        <div class="row center"></div>
-<!--         {% for movie in movies %}
-          <div class="row remb" id="{{hall['hid']}}">
-            <button class="center waves-effect waves-light col s12">{{movie['h_name']}}</button>
-          </div>          
-        {% endfor %}
- -->        <div class="row">
-        </div>
-        <form class="login-form" action="/remhall/submit" method="POST">
-            <input type="text" id="del" name="del" hidden required>
-            <div class="row">
-              <div class="input-field col s12">
-                <button type="submit" class="btn waves-effect waves-light col s12">Remove</button>
-              </div>
-            </div>    
-        </form>
-      </div>
-
+  <div class="col s12 z-depth-4 card-panel">
+    <form class="login-form" action="/remmovie/submit" method="POST">
       <div class="row">
+        <div class="input-field col s12 center">
+          <p class="center login-form-text">Select Movie</p>
+        </div>
+      </div>
+      <div class="row margin">
+        <div class="input-field col s12">
+          <select name="movie" class="browser-default">
+            <option value="" disabled="">Movie</option>
+            {% for movie in movies %}
+            <option value="{{ movie['mid'] }}">{{ movie['title'] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <button type="submit" class="btn waves-effect red col s12">Delete</button>
+        </div>
       </div>
 
-      </form>
-    </div>
-  <!-- </div> -->
+    </form>
+  </div>
 
 
 
@@ -59,6 +52,6 @@
   <!--materialize js-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 
-  
+
 </body>
 </html>

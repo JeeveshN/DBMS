@@ -31,13 +31,13 @@ def index():
 def loginSub():
     userid = request.form['email']
     password = request.form['password']
-    if auth is None:
+    if db.auth_user(userid,password) is None:
         return redirect('/')
     else:
         auth,uid = db.auth_user(userid,password)
         if auth=='User':
             session['user']=uid
-            return redirect('user.html')
+            return render_template('user.html')
         else:
             session['admin']=uid
             return redirect('admin')
@@ -144,8 +144,11 @@ def add_movie_sub():
     db.add_movie(title, desc, rating, lang, img, genre)
     return redirect('admin')
 
-# @app.route('/remmovie/submit',methods=['POST'])
-# def rem_movie_sub():
+@app.route('/remmovie/submit',methods=['POST'])
+def rem_movie_sub():
+    mid = request.form['movie']
+    db.delete_movie(mid)
+    return redirect('admin')
 
 @app.route('/viewmovie')
 def view_movie():
