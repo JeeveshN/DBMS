@@ -178,10 +178,11 @@ class Database():
 		self.conn.commit()
 		return 'Success'
 
-	def register_user(fname, lname, email, phno, pwd):
+	def register_user(self, fname, lname, email, phno, pwd):
 		type = "User"
-		self.cursor.execute("INSERT INTO user(fname, lname, email, phno, pwd, type) VALUES('%s', '%s', '%s', '%s', '%s', '%s')"%(fname, lname, email, phno, pwd, type))
-
+		self.cursor.execute("INSERT INTO user(fname, lname, email, phno, pass, type) VALUES('%s', '%s', '%s', '%s', '%s', '%s')"%(fname, lname, email, phno, pwd, type))
+		uid = self.cursor.lastrowid
+		return uid
 
 	def get_shows_of_movie(self, mid):
 		mid = int(mid)

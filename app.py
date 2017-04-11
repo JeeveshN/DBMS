@@ -20,6 +20,8 @@ def check_user():
         return True
     return False
 
+# return render_template('error.html',error=error)
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -27,6 +29,22 @@ def index():
         return render_template('user.html')
      return render_template('index.html')
 
+
+@app.route('/reg')
+def reg():
+    return render_template('reg.html')
+
+@app.route('/reg/submit', methods=['POST'])
+def regSub():
+    fname = request.form['fname']
+    lname = request.form['lname']
+    ph = request.form['ph']
+    email = request.form['email']
+    password = request.form['password']
+    uid = db.register_user(fname, lname, email, ph, password)
+    session['user']=uid
+    return render_template('user.html')
+    
 @app.route('/login/submit', methods=['POST'])
 def loginSub():
     userid = request.form['email']
@@ -48,7 +66,7 @@ def admin():
     if chech_admin():
         return render_template('admin.html')
     else:
-        return render_template('index.html')
+        return redirect('/')
 
 @app.route('/user')
 def user():
@@ -93,8 +111,10 @@ def add_show_sub():
     time = request.form['time']
     time = re.sub('T'," ",time)
     time = time+":00"
-    db.add_show(int(hid),int(mid),time)
-    return redirect('admin')
+    out = db.add_show(int(hid),int(mid),time)
+    if out != 'Success':
+        return render_template('error.html',error=out)
+    return render_template('success.html')
 
 @app.route('/show_halls')
 def show_halls():
@@ -119,7 +139,7 @@ def rem_show_sub():
     # print hid,mid,time
     if hid and mid and time:
         db.delete_show(hid,mid,time)
-    return redirect('admin')
+    return render_template('success.html')
 
 @app.route('/addhall/submit',methods=['POST'])
 def add_hall_sub():
@@ -128,7 +148,7 @@ def add_hall_sub():
     n_g = request.form['num_gold']
     n_s = request.form['num_silver']
     db.add_hall(hname,n_p,n_g,n_s)
-    return redirect('admin')
+    return render_template('success.html')
 
 @app.route('/remhall/submit',methods=['POST'])
 def rem_hall_sub():
@@ -136,7 +156,7 @@ def rem_hall_sub():
     print(bid)
     if bid:
         db.delete_hall(bid)
-    return redirect('admin')
+    return render_template('success.html')
 
 @app.route('/addmovie/submit',methods=['POST'])
 def add_movie_sub():
@@ -149,13 +169,13 @@ def add_movie_sub():
     lang = request.form['lang']
     genre = request.form['genre']
     db.add_movie(title, desc, rating, lang, img, genre)
-    return redirect('admin')
+    return render_template('success.html')
 
 @app.route('/remmovie/submit',methods=['POST'])
 def rem_movie_sub():
     mid = request.form['movie']
     db.delete_movie(mid)
-    return redirect('admin')
+    return render_template('success.html')
 
 @app.route('/viewmovie')
 def view_movie():
@@ -234,7 +254,7 @@ def pay_sub():
     res = request.form['res']
     res = eval(res)
     success = db.book(res['mid'], res['hid'], res['time'], res['uid'], res['seat_list'])
-    return (success)
+    return render_template('success.html')
 
 @app.route('/logout_admin')
 def logout_admin():
